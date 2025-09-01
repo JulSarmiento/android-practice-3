@@ -3,10 +3,11 @@ package com.julhdev.navegacion.views
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
@@ -15,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.julhdev.navegacion.components.MainBtn
 import com.julhdev.navegacion.components.MainIconBtn
@@ -31,7 +33,7 @@ import com.julhdev.navegacion.components.TitleVew
             * Contiene el contenido específico de la vista de detalles.
             * usage: DetailView()
             */
-fun DetailView(navController: NavController){
+fun DetailView(navController: NavController, id: Int, optional: String?){
   Scaffold(
     topBar = {
       TopAppBar(
@@ -49,7 +51,7 @@ fun DetailView(navController: NavController){
       )
     },
   ) {
-    ContentDetailView(navController)
+    ContentDetailView(navController, id, optional)
   }
 }
 
@@ -59,7 +61,7 @@ fun DetailView(navController: NavController){
             * Muestra un título y un botón para regresar a la vista principal.
             * usage: ContentDetailView()
             */
-fun ContentDetailView(navController: NavController){
+fun ContentDetailView(navController: NavController, id: Int, optional: String?){
   Column(
     modifier = Modifier.fillMaxSize(),
     verticalArrangement = Arrangement.Center,
@@ -67,6 +69,14 @@ fun ContentDetailView(navController: NavController){
   ) {
     TitleVew(name = "Detail View")
     Space()
+    TitleVew(name = "ID: $id")
+    Space()
+    if(optional == "") {
+      Spacer(modifier = Modifier.height(0.dp))
+    } else {
+      TitleVew(name = optional.orEmpty())
+      Space()
+    }
     MainBtn(
       name = "Return Home",
       backColor = Color.Blue,
